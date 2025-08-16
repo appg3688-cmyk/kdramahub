@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>K-DRAMA HUB — New Uploaded Episodes</title>
+<style>
+:root {
+  --bg:#eaf2ff; --panel:#0b1320; --card:#ffffff; --text:#0b0f1a;
+  --muted:#475569; --danger:#b91c1c; --danger-dk:#7f1d1d; --ring:rgba(2,6,23,.1);
+  --footer-bg:#d1d5db; --footer-text:#111827;
+  --ad-bg:#f3f4f6; --ad-text:#1f2937; --ad-highlight:#3b82f6;
+}
+body.dark {
+  --bg:#0f172a; --panel:#1e293b; --card:#1e293b; --text:#f1f5f9;
+  --muted:#cbd5e1; --danger:#dc2626; --danger-dk:#7f1d1d; --ring:rgba(255,255,255,.1);
+  --footer-bg:#1f2937; --footer-text:#f1f5f9;
+  --ad-bg:#1e293b; --ad-text:#e5e7eb; --ad-highlight:#60a5fa;
+}
+*{box-sizing:border-box}body{margin:0;font-family:sans-serif;line-height:1.5;color:var(--text);background:var(--bg);transition:.3s}
+.container{width:min(980px,100% - 32px);margin:0 auto}
+
+/* HEADER */
+header{background:var(--panel);color:#fff;position:sticky;top:0;z-index:50}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.brand-box{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#ef4444,#991b1b);animation:pulse 2s infinite}
+.brand{font-weight:900;animation:colorShift 5s infinite}
+.toggle-btn{background:#fff;color:#000;border:none;border-radius:8px;padding:6px 10px;cursor:pointer;transition:all 0.3s}
+body.dark .toggle-btn{background:#334155;color:#f1f5f9}
+
+/* MENU */
+nav.menu{display:flex;gap:20px;align-items:center}
+nav.menu a{color:#fff;text-decoration:none;font-weight:600;position:relative;transition:all 0.3s}
+nav.menu a:hover{transform:translateY(-2px)}
+nav.menu .dropdown{position:relative}
+nav.menu .dropdown-content{
+  display:none;position:absolute;background:var(--panel);top:100%;left:0;min-width:180px;
+  border-radius:6px;padding:8px;z-index:100;animation:fadeIn 0.3s
+}
+nav.menu .dropdown-content a{display:block;padding:6px 8px;color:#fff;font-weight:400;white-space:nowrap}
+nav.menu .dropdown:hover>.dropdown-content{display:block}
+
+/* Sub-dropdown */
+nav.menu .dropdown-sub{position:relative}
+nav.menu .dropdown-sub .dropdown-content{
+  top:0;left:100%;margin-left:5px;
+}
+nav.menu .dropdown-sub:hover>.dropdown-content{display:block}
+
+/* SEARCH BAR */
+.search-box{display:flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:4px 8px;background:#fff;transition:all 0.3s}
+.search-box input{border:none;outline:none;background:transparent;padding:6px;flex:1}
+.search-box button{border:none;background:#0ea5e9;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer;transition:all 0.3s}
+.search-box button:hover{transform:scale(1.05)}
+body.dark .search-box{background:#1e293b;border-color:#475569}
+body.dark .search-box input{color:#f1f5f9}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer}
+.hamburger span{width:25px;height:3px;background:#fff;border-radius:4px;transition:all 0.3s}
+.hamburger:hover span{transform:scaleX(1.1)}
+.menu-mobile{display:none;flex-direction:column;gap:14px;background:var(--panel);padding:18px;animation:slideDown 0.3s}
+.menu-mobile a{color:#fff;text-decoration:none;transition:all 0.3s}
+.menu-mobile a:hover{transform:translateX(5px)}
+.menu-mobile .dropdown-content{display:none;padding-left:14px;flex-direction:column;animation:fadeIn 0.3s}
+.menu-mobile .dropdown.open>.dropdown-content{display:flex;gap:6px}
+@media(max-width:768px){
+  nav.menu{display:none}
+  .hamburger{display:flex}
+  .menu-mobile.show{display:flex}
+}
+
+/* CONTENT */
+.section-title{margin:18px 0 12px;background:#0f172a;color:#fff;padding:14px 16px;border-radius:12px;font-weight:900;animation:glow 2s infinite alternate}
+body.dark .section-title{background:#334155}
+.list{display:grid;gap:14px}
+.item{background:var(--card);border:1px solid #e2e8f0;border-radius:14px;padding:16px;box-shadow:0 6px 16px var(--ring);transition:all 0.3s}
+.item:hover{transform:translateY(-3px);box-shadow:0 8px 20px var(--ring)}
+.item-inner{display:flex;flex-direction:column;gap:10px}
+.top{color:var(--muted);font-size:.9rem}
+.title{font-weight:900}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-danger{background:linear-gradient(180deg,var(--danger),var(--danger-dk));color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:700;transition:all 0.3s}
+.btn-danger:hover{opacity:.9;transform:scale(1.05)}
+@media(min-width:680px){.item-inner{flex-direction:row;justify-content:space-between;align-items:center}}
+
+/* ADS */
+.ad-container {
+  background: var(--ad-bg);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+  border: 1px solid rgba(0,0,0,0.1);
+  overflow: hidden;
+  position: relative;
+  animation: fadeInUp 0.5s;
+}
+.ad-title {
+  font-weight: bold;
+  color: var(--ad-text);
+  margin-bottom: 8px;
+  animation: textGlow 2s infinite alternate;
+}
+.ad-description {
+  color: var(--ad-text);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  animation: slideInLeft 0.5s;
+}
+.ad-link {
+  color: var(--ad-highlight);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+.ad-link:hover {
+  text-decoration: underline;
+}
+.ad-link::after {
+  content: "→";
+  position: absolute;
+  right: -15px;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.ad-link:hover::after {
+  right: -20px;
+  opacity: 1;
+}
+
+/* VIDEO PLAYER MODAL */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s;
+}
+.video-container {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+}
+.close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1001;
+}
+.video-iframe {
+  width: 100%;
+  height: 450px;
+  border: none;
+  border-radius: 8px;
+}
+@media (max-width: 768px) {
+  .video-iframe {
+    height: 250px;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes colorShift {
+  0% { color: #fff; }
+  25% { color: #fca5a5; }
+  50% { color: #93c5fd; }
+  75% { color: #86efac; }
+  100% { color: #fff; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes glow {
+  from { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+  to { box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); }
+}
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes textGlow {
+  from { text-shadow: 0 0 5px rgba(59, 130, 246, 0.3); }
+  to { text-shadow: 0 0 10px rgba(59, 130, 246, 0.6); }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
+/* FOOTER */
+footer{background:var(--footer-bg);color:var(--footer-text);text-align:center;padding:18px 10px;margin-top:30px}
+.footer-link{color:inherit;text-decoration:none;font-weight:700;transition:all 0.3s}
+.footer-link:hover{color:var(--ad-highlight);transform:scale(1.05)}
+#datetime{animation:colorShift 5s infinite}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <div class="brand-box">
+      <div class="logo"></div>
+      <div class="brand">K-DRAMA HUB</div>
+    </div>
+    <nav class="menu">
+      <a href="#">📢 Join Us Telegram</a>
+      <a href="#">📩 Contact Admin</a>
+      <a href="#">🎬 All Drama</a>
+      <div class="dropdown">
+        <a href="#">📂 Categories ▾</a>
+        <div class="dropdown-content">
+          <div class="dropdown-sub">
+            <a href="#">❤️ Romance ▸</a>
+            <div class="dropdown-content">
+              <a href="#">🇰🇷 Korean</a>
+              <a href="#">🇨🇳 Chinese</a>
+              <a href="#">🇯🇵 Japanese</a>
+            </div>
+          </div>
+          <div class="dropdown-sub">
+            <a href="#">🔥 Action ▸</a>
+            <div class="dropdown-content">
+              <a href="#">🔪 Thriller</a>
+              <a href="#">⚔️ War</a>
+              <a href="#">🥋 Martial Arts</a>
+            </div>
+          </div>
+          <a href="#">😂 Comedy</a>
+        </div>
+      </div>
+      <!-- Search inside menu -->
+      <form class="search-box" onsubmit="event.preventDefault(); searchDrama();">
+        <input type="text" id="searchInput" placeholder="Search drama..."/>
+        <button type="submit">🔍</button>
+      </form>
+    </nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="toggle-btn" id="modeToggle">🌙 Dark</button>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+  <!-- MOBILE MENU -->
+  <div class="menu-mobile" id="mobileMenu">
+    <a href="#">📢 Join Us Telegram</a>
+    <a href="#">📩 Contact Admin</a>
+    <a href="#">🎬 All Drama</a>
+    <div class="dropdown" id="mobileDropdown1">
+      <a href="javascript:void(0)">📂 Categories ▾</a>
+      <div class="dropdown-content">
+        <div class="dropdown" id="mobileSub1">
+          <a href="javascript:void(0)">❤️ Romance ▾</a>
+          <div class="dropdown-content">
+            <a href="#">🇰🇷 Korean</a>
+            <a href="#">🇨🇳 Chinese</a>
+            <a href="#">🇯🇵 Japanese</a>
+          </div>
+        </div>
+        <div class="dropdown" id="mobileSub2">
+          <a href="javascript:void(0)">🔥 Action ▾</a>
+          <div class="dropdown-content">
+            <a href="#">🔪 Thriller</a>
+            <a href="#">⚔️ War</a>
+            <a href="#">🥋 Martial Arts</a>
+          </div>
+        </div>
+        <a href="#">😂 Comedy</a>
+      </div>
+    </div>
+    <form class="search-box" onsubmit="event.preventDefault(); searchDrama();" style="margin-top:10px">
+      <input type="text" id="searchInputMobile" placeholder="Search drama..."/>
+      <button type="submit">🔍</button>
+    </form>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<main class="container">
+  <div class="section-title">New Uploaded Episodes</div>
+  
+  <!-- First Ad with Animation -->
+  <div class="ad-container">
+    <div class="ad-title">Web3 ads with onchain targeting</div>
+    <div class="ad-description">Advertise to crypto natives with Slise</div>
+    <a href="https://slise.xyz" target="_blank" class="ad-link">slise.xyz</a>
+  </div>
+  
+  <section class="list" id="episodeList">
+    <article class="item">
+      <div class="item-inner">
+        <div>
+          <div class="top">8/16/2025</div>
+          <div class="title">Episode 07 - The Winning Try (2025)</div>
+        </div>
+        <div class="actions">
+          <a class="btn-danger" href="#">Download This Episode</a>
+          <a class="btn-danger" href="#" onclick="playVideo('VuV8He6wz2U'); return false;">Download Full Drama</a>
+        </div>
+      </div>
+    </article>
+    
+    <!-- Second Ad with Animation -->
+    <div class="ad-container" style="animation-delay:0.2s">
+      <div class="ad-title">Web3 ads with onchain targeting</div>
+      <div class="ad-description">Advertise to crypto natives with Slise</div>
+      <a href="https://slise.xyz" target="_blank" class="ad-link">slise.xyz</a>
+    </div>
+    
+    <article class="item">
+      <div class="item-inner">
+        <div>
+          <div class="top">8/15/2025</div>
+          <div class="title">Episode 08 - My Girlfriend Is the Man! (2025)</div>
+        </div>
+        <div class="actions">
+          <a class="btn-danger" href="#">Download This Episode</a>
+          <a class="btn-danger" href="#" onclick="playVideo('VuV8He6wz2U'); return false;">How To Download</a>
+        </div>
+      </div>
+    </article>
+    
+    <!-- Third Ad with Animation -->
+    <div class="ad-container" style="animation-delay:0.4s">
+      <div class="ad-title">Advertise in this ad space</div>
+      <div class="ad-description">Create a campaign in just 5 minutes</div>
+      <a href="https://aads.com" target="_blank" class="ad-link">aads.com</a>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div style="animation:float 3s infinite">Korean Drama Store</div>
+  <div><a class="footer-link" href="https://t.me/joinchat/xxxx" target="_blank">📢 Join Us Telegram</a></div>
+  <div id="datetime"></div>
+</footer>
+
+<script>
+const btn=document.getElementById('modeToggle');
+btn.addEventListener('click',()=>{
+  document.body.classList.toggle('dark');
+  btn.textContent=document.body.classList.contains('dark')?"☀️ Light":"🌙 Dark";
+  // Add animation to mode toggle
+  btn.style.animation = "none";
+  setTimeout(() => {
+    btn.style.animation = "pulse 0.5s";
+  }, 10);
+});
+
+// Hamburger toggle
+document.getElementById('hamburger').addEventListener('click',()=>{
+  document.getElementById('mobileMenu').classList.toggle('show');
+  // Animate hamburger to X
+  const spans = document.querySelectorAll('.hamburger span');
+  if(document.getElementById('mobileMenu').classList.contains('show')) {
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+});
+
+// Mobile dropdown toggles
+document.querySelectorAll(".menu-mobile .dropdown>a").forEach(link=>{
+  link.addEventListener("click",function(){
+    this.parentElement.classList.toggle("open");
+    // Add arrow rotation animation
+    const arrow = this.querySelector('span');
+    if(arrow) {
+      arrow.style.transform = this.parentElement.classList.contains("open") ? 
+        'rotate(90deg)' : 'rotate(0deg)';
+    }
+  });
+});
+
+// Search filter
+function searchDrama(){
+  let input=document.getElementById("searchInput")?.value.toLowerCase() || document.getElementById("searchInputMobile")?.value.toLowerCase();
+  let items=document.querySelectorAll("#episodeList .item");
+  items.forEach(item=>{
+    let title=item.querySelector(".title").textContent.toLowerCase();
+    item.style.display=title.includes(input)?"":"none";
+  });
+  // Add search animation
+  const searchBtn = document.querySelector('.search-box button');
+  searchBtn.style.animation = "none";
+  setTimeout(() => {
+    searchBtn.style.animation = "pulse 0.5s";
+  }, 10);
+}
+
+// Date/time
+function updateTime(){document.getElementById("datetime").textContent=new Date().toLocaleString();}
+setInterval(updateTime,1000);updateTime();
+
+// Add hover animation to all buttons
+document.querySelectorAll('a, button').forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
+    btn.style.transform = 'scale(1.05)';
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// YouTube video player function
+function playVideo(videoId) {
+  // Create modal container
+  const modal = document.createElement('div');
+  modal.className = 'video-modal';
+  
+  // Create video container
+  const videoContainer = document.createElement('div');
+  videoContainer.className = 'video-container';
+  
+  // Create close button
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'close-btn';
+  closeBtn.innerHTML = '&times;';
+  closeBtn.onclick = function() {
+    document.body.removeChild(modal);
+  };
+  
+  // Create iframe
+  const iframe = document.createElement('iframe');
+  iframe.className = 'video-iframe';
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  iframe.allowFullscreen = true;
+  
+  // Assemble elements
+  videoContainer.appendChild(closeBtn);
+  videoContainer.appendChild(iframe);
+  modal.appendChild(videoContainer);
+  document.body.appendChild(modal);
+  
+  // Close modal when clicking outside
+  modal.onclick = function(e) {
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  };
+  
+  // Add keyboard escape functionality
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.body.removeChild(modal);
+    }
+  });
+}
+</script>
+</body>
+</html>
